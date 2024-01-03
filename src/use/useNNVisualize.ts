@@ -88,11 +88,11 @@ export default (
     })
   }
 
-  const showInferenced = (inferenced: number, depth: number) => {
+  const showInferred = (inferred: number, depth: number) => {
     let textMesh: Mesh | undefined = undefined
     new FontLoader().load('/nnvisualize/helvetiker_regular.typeface.json', (font) => {
       textMesh = new Mesh(
-        new TextGeometry(inferenced.toString(), {
+        new TextGeometry(inferred.toString(), {
           font,
           size: 76,
           height: 1,
@@ -131,7 +131,7 @@ export default (
     generateBox,
     generateBoxMatrix,
     generateFullyConnectedLine,
-    showInferenced,
+    showInferred,
     rotate,
     stop,
   }
