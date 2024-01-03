@@ -90,7 +90,7 @@ export default (
 
   const showInferenced = (inferenced: number, depth: number) => {
     let textMesh: Mesh | undefined = undefined
-    new FontLoader().load('/helvetiker_regular.typeface.json', (font) => {
+    new FontLoader().load('/nnvisualize/helvetiker_regular.typeface.json', (font) => {
       textMesh = new Mesh(
         new TextGeometry(inferenced.toString(), {
           font,
