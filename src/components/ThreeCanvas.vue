@@ -25,7 +25,7 @@ export default defineComponent({
     const renderer = ref<WebGLRenderer>()
     const animationKey = ref(0)
 
-    const rotateVisualizedInference = (imageNormarized: number[]) => {
+    const rotateVisualizedInference = (imageNormalized: number[]) => {
       if (!canvas.value) {
         return
       }
@@ -34,15 +34,15 @@ export default defineComponent({
         cancelAnimationFrame(animationKey.value)
       }
 
-      const inferenceResult = inference(model, imageNormarized)
+      const inferenceResult = inference(model, imageNormalized)
       const {
         generateBoxMatrix,
         generateFullyConnectedLine,
-        showInferenced,
+        showInferred,
         rotate
       } = useNNVisualize(canvas.value, renderer, animationKey, width, height, devicePixelRatio)
 
-      const inputLayer = generateBoxMatrix(28, 28, 5, 5, 100, imageNormarized)
+      const inputLayer = generateBoxMatrix(28, 28, 5, 5, 100, imageNormalized)
 
       const hiddenGrayScaleMax = Math.max(...inferenceResult.inputSignalActivated)
       const hiddenLayerGrayScale = inferenceResult.inputSignalActivated.map((v) => v / hiddenGrayScaleMax)
@@ -54,20 +54,20 @@ export default defineComponent({
       generateFullyConnectedLine(inputLayer, hiddenLayer)
       generateFullyConnectedLine(hiddenLayer, outputLayer)
 
-      const inferencedNumber = inferenceResult.outputSignalSoftMax.indexOf(Math.max(...inferenceResult.outputSignalSoftMax))
-      showInferenced(inferencedNumber, -110)
+      const inferredNumber = inferenceResult.outputSignalSoftMax.indexOf(Math.max(...inferenceResult.outputSignalSoftMax))
+      showInferred(inferredNumber, -110)
 
       rotate()
     }
 
     watch(() => props.image, () => {
-      const imageNormarized = props.image.map((v) => v / 255)
-      rotateVisualizedInference(imageNormarized)
+      const imageNormalized = props.image.map((v) => v / 255)
+      rotateVisualizedInference(imageNormalized)
     })
 
     watch(canvas, () => {
-      const imageNormarized = props.image.map((v) => v / 255)
-      rotateVisualizedInference(imageNormarized)
+      const imageNormalized = props.image.map((v) => v / 255)
+      rotateVisualizedInference(imageNormalized)
     })
 
     return {
